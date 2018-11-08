@@ -26,7 +26,7 @@ LayoutInflater inflater3 = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SER
 
 2. **加载布局的方法**：
 
-`public View **inflate** (int resource, ViewGroup root, boolean attachToRoot)` 该方法的三个参数依次为：
+`public View inflate (int resource, ViewGroup root, boolean attachToRoot)` 该方法的三个参数依次为：
 
 - **resource**：要加载的布局对应的资源ID
 - **root**：为该布局的外部在嵌套一层父布局，如不需要，填写null即可
@@ -121,13 +121,16 @@ LayoutInflater inflater3 = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SER
    **方案二**：在res/values/下添加id.xml(名字可随意)文件，代码如下：
 
    ```xml
-   `<?``xml` `version="1.0" encoding="utf-8"?>``<``resources``>``    ``<``item` `name="my_view" type="id" />``</``resources``>`
+   <?xml version="1.0" encoding="utf-8"?>
+   <resources>
+       <item name="my_view" type="id" />
+   </resources>
    ```
 
     　　然后在代码中做如下设置即可：
 
    ```java
-   `my_view.setId(R.id.my_view);`
+   my_view.setId(R.id.my_view);
    ```
 
 5. 调用`setContentView()`方法加载布局对象，移除组件可以调用`容器.removeView(要移除的组件)`
