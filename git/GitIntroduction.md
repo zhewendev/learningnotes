@@ -18,13 +18,13 @@ Git有什么特点？简单来说就是：高端大气上档次！
 于是你想，**如果有一个软件，不但能自动帮我记录每次文件的改动，还可以让同事协作编辑**，这样就不用自己管理一堆类似的文件了，也不需要把文件传来传去。如果想查看某次改动，只需要在软件里瞄一眼就可以，岂不是很方便？
 
 这个软件用起来就应该像这个样子，能记录每次文件的改动：
-![Git实现效果图](E:\photo\Git\廖雪峰Git教程\Git介绍2.png)
+![Git实现效果图](E:\document\photo\Git\廖雪峰Git教程\Git介绍2.png)
 
 
 
 先说集中式版本控制系统，版本库是集中存放在中央服务器的，而干活的时候，用的都是自己的电脑，所以要先从中央服务器取得最新的版本，然后开始干活，干完活了，再把自己的活推送给中央服务器。中央服务器就好比是一个图书馆，你要改一本书，必须先从图书馆借出来，然后回到家自己改，改完了，再放回图书馆。
 
-![](E:\photo\Git\廖雪峰Git教程\集中式版本控制系统.jpg)
+![](E:\document\photo\Git\廖雪峰Git教程\集中式版本控制系统.jpg)
 
 **集中式版本控制系统最大的毛病就是必须联网才能工作**，如果在局域网内还好，带宽够大，速度够快，可如果在互联网上，遇到网速慢的话，可能提交一个10M的文件就需要5分钟，这还不得把人给憋死啊。
 
@@ -32,7 +32,7 @@ Git有什么特点？简单来说就是：高端大气上档次！
 
 在实际使用分布式版本控制系统的时候，其实很少在两人之间的电脑上推送版本库的修改，因为可能你们俩不在一个局域网内，两台电脑互相访问不了，也可能今天你的同事病了，他的电脑压根没有开机。因此，分布式版本控制系统通常也有一台充当“中央服务器”的电脑，但这个服务器的作用仅仅是用来方便“交换”大家的修改，没有它大家也一样干活，只是交换修改不方便而已。
 
-![](E:\photo\Git\廖雪峰Git教程\分布式版本控制系统.jpg)
+![](E:\document\photo\Git\廖雪峰Git教程\分布式版本控制系统.jpg)
 
 
 
@@ -72,11 +72,12 @@ Xcode是Apple官方IDE，功能非常强大，是开发Mac和iOS App的必选装
 安装完成后，在开始菜单里找到“Git”->“Git Bash”，蹦出一个类似命令行窗口的东西，就说明Git安装成功！
 安装完成后，还需要最后一步设置，在命令行输入：
 
-```
+```nginx
 $ git config --global user.name"Your Name"
 $ git config --global user.email"email@example.com"
 ```
 
+[为不同项目配置不同的信息](http://daemon369.github.io/git/2015/03/11/setting-email-in-git)
 
 ## 初次运行 Git 前的配置
 
@@ -150,7 +151,7 @@ $ pwd
 
 瞬间Git就把仓库建好了，而且告诉你是一个空的仓库（empty Git repository），细心的读者可以发现当前目录下多了一个`.git`的目录，这个目录是Git来跟踪管理版本库的，没事千万不要手动修改这个目录里面的文件，不然改乱了，就把Git仓库给破坏了。
 
-如果你没有看到`.git`目录，那是因为这个目录默认是隐藏的，用`ls -ah`命令就可以看见。[空目录下创建Git仓库](http://liaoxuefeng.gitee.io/git-resources/1-git-init.mp4)
+如果你没有看到`.git`目录，那是因为这个目录默认是隐藏的，用`ls -ah`（或`ls -af`）命令就可以看见。[空目录下创建Git仓库](http://liaoxuefeng.gitee.io/git-resources/1-git-init.mp4)
 
 ## 把文件添加到版本库
 首先这里再明确一下，**所有的版本控制系统，其实只能跟踪文本文件的改动，**比如`TXT文件，网页，所有的程序代码`等等，Git也不例外。版本控制系统可以告诉你每次的改动，比如在第5行加了一个单词“Linux”，在第8行删了一个单词“Windows”。而图片、视频这些二进制文件，虽然也能由版本控制系统管理，但没法跟踪文件的变化，只能把二进制文件每次改动串起来，也就是只知道图片从100KB改成了120KB，但到底改了啥，版本控制系统不知道，也没法知道。
@@ -191,6 +192,55 @@ $ git commit -m "wrote a readme file"
 `git commit`命令执行成功后会告诉你，`1 file changed`：1个文件被改动（我们新添加的readme.txt文件）；`2 insertions`：插入了两行内容（readme.txt有两行内容）。
 [添加文件到Git仓库](http://liaoxuefeng.gitee.io/git-resources/2-git-add-commit.mp4)
 
+git 提供了`git grep..`对版本库中的文件进行内容搜索，相关使用通过`git help grep`
+
+**子目录中执行Git命令时，如何定位版本库?**可以通过：`git rev-parse --git-dir`显示版本库`.git`目录所在的位置
+
+`git rev-parse --show-toplevel`显示工作区根目录
+
+`git rev-parse --show-prefix`显示当前目录相对于工作区根目录的相对目录
+
+`git rev-parse --show-cdup`显示从当前目录后退到工作区的根的深度
+
+**git config命令参数的区别？**
+
+`git config`命令，有的使用`--global`参数，有的使用`--system`参数，有什么区别？
+
+- `git config -e`对版本库级别的配置文件进行编辑
+- `git config -e --global`是全局配置文件
+- `git config -e --system`是系统级配置文件
+
+其中版本库级别配置文件优先级最高，依次递减，覆盖。
+
+git配置文件采用的是**INI**文件格式。可以用`git config`操作任何**INI**文件
+
+**git提交问题**
+
+如果删除git全局配置文件中关于user.name和user.email设置
+
+```shell
+$ git config --unset --global user.name
+$ git config --unset --global user.email
+```
+
+尝试进行提交
+
+```shell
+git commit --allow-empty -m "who does commit?"
+```
+
+（使用了`--allow-empty`参数，允许执行空白提交，此时提交输出混乱，git对提交者信息做了大胆猜测。可以根据git提醒，恢复设置，重新修改最新的提交，更正作者和提交者的错误信息）
+
+```shell
+git commit --amend --allow-empty --reset-author
+```
+
+这里修正提交添加`--allow-empty`是因为之前是空白提交
+
+Android项目为了更好的使用Git实现对代码的集中管理，开发了一套叫做**Grrrit**的审核服务器来管理Git提交，对提交者的邮件地址进行审核。
+
+命令别名除了简洁命令，还可以满足其他版本控制系统使用经验的使用习惯。并且命令别名还可以包含命令参数。
+
 ## 克隆现有的仓库
 如果你想获得一份已经存在了的 Git 仓库的拷贝，比如说，你想为某个开源项目贡献自己的一份力，这时就要用到`git clone `命令。这是 Git 区别于其它版本控制系统的一个重要特性，Git 克隆的是该 Git 仓库服务器上的几乎所有数据，而不是仅仅复制完成你的工作所需要文件。 当你执行 `git clone` 命令的时候，默认配置下远程 Git 仓库中的每一个文件的每一个版本都将被拉取下来。 事实上，如果你的服务器的磁盘坏掉了，你通常可以使用任何一个克隆下来的用户端来重建服务器上的仓库。
 
@@ -210,6 +260,9 @@ $ git clone https://github.com/libgit2/libgit2 mylibgit
 Git 支持多种数据传输协议。 上面的例子使用的是 `https://` 协议，不过你也可以使用 `git:// `协议或者使用 `SSH` 传输协议，比如 `user@server:path/to/repo.git `。
 
 # 记录更新
+
+对版本库进行提交操作，可以通过`git log` 查看提交日志（附加`--stat`参数可以看到每次提交的文件的变更统计）
+
 现在我们手上有了一个真实项目的 Git 仓库，并从这个仓库中取出了所有文件的工作拷贝。 接下来，对这些文件做些修改，在完成了一个阶段的目标之后，提交本次更新到仓库。
 
 工作目录下的每一个文件都不外乎这两种状态：**已跟踪或未跟踪**。 <font color=red>**已跟踪的文件是指**</font>那些被纳入了版本控制的文件，在上一次快照中有它们的记录，在工作一段时间后，它们的状态可能处于未修改，已修改或已放入暂存区。<font color=red> **工作目录中除已跟踪文件以外的所有其它文件都属于未跟踪文件**</font>，它们既不存在于上次快照的记录中，也没有放入暂存区。 **初次克隆某个仓库的时候，工作目录中的所有文件都属于已跟踪文件，并处于未修改状态。**
@@ -388,6 +441,8 @@ M  lib/simplegit.rb
 
 <font color = red>**请注意**</font>，**`git diff` 本身只显示尚未暂存的改动**，而不是自上次提交以来所做的所有改动。 所以有时候你一下子暂存了所有更新过的文件后，运行 `git diff` 后却什么也没有，就是这个原因。
 
+可以运行`git diff head`比较当前版本库头指针，就会发现差异，改动暂未提交。
+
 ### 提交更新
 
 暂存区域已经准备妥当可以提交了。 在此之前，请一定要确认还有什么修改过的或新建的文件还没有 `git add` 过，否则提交的时候不会记录这些还没暂存起来的变化。 这些修改过的文件只保留在本地磁盘。 所以，每次准备提交前，先用 `git status` 看下，是不是都已暂存起来了， 然后再运行提交命令 `git commit`。
@@ -486,11 +541,11 @@ HEAD is now at 83b0afe append GPL
 
 Git的版本回退速度非常快，因为Git在内部有个指向当前版本的`HEAD`指针，当你回退版本的时候，Git仅仅是把HEAD从指向`append GPL`：
 
-![git HEAD指针](E:\photo\Git\廖雪峰Git教程\0.jpg)
+![git HEAD指针](E:\document\photo\Git\廖雪峰Git教程\0.jpg)
 
 改为指向`add distributed`：
 
-![Git head指针](E:\photo\Git\廖雪峰Git教程\1.jpg)
+![Git head指针](E:\document\photo\Git\廖雪峰Git教程\1.jpg)
 
 然后顺便把工作区的文件更新了。所以你让`HEAD`指向哪个版本号，你就把当前版本定位在哪。
 
@@ -1913,7 +1968,7 @@ $ git reset HEAD test.py
 $ git config --global alias.last 'log -1'
 ```
 
-这样，用`git last`就能显示最近一次的提交：
+这样，用`git last`就能显示最近一次的提交：c
 
 ```
 $ git last
