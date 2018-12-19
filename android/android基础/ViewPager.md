@@ -539,3 +539,17 @@ PagerAdapter 是抽象的类，所以使用时只能使用它的子类，即**Fr
 
 
 
+
+
+
+
+
+
+```
+if (position ==0) {
+    viewPager.setCurrentItem(imageViews.length - 2, false);
+} else if (position == (imageViews.length - 1)) {
+    viewPager.setCurrentItem(1, false);
+}
+```
+
